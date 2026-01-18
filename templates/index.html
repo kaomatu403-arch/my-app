@@ -5,19 +5,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ポケット掲示板</title>
+    <link rel="icon" href="../static/images/aiueo_hutoi.png" type="image/x-icon">
 
-    <link rel="stylesheet" href="..\static\css\style.css">
-    <script src="..\static\js\main.js" defer></script>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <script src="../static/js/main.js" defer></script>
 </head>
 
 <body>
+
+    <!-- ハンバーガーメニュー -->
+    <div class="hamburger-menu">
+        <div class="hamburger-icon" id="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <div class="side-menu" id="side-menu">
+        <div class="menu-block">
+            <img src="profile.jpg" alt="プロフィール画像" class="profile-img">
+            <p class="profile-name">Akira Ishikawa</p>
+            <a href="#" class="mypage-link">マイページ</a>
+        </div>
+    </div>
 
     <!-- メインコンテナ -->
     <div class="container">
 
         <!-- 象徴画像 -->
         <div class="hero-image">
-            <img src="hero.jpg" alt="サイトを象徴する画像">
+            <img src="../static/images/ぽけっと 掲示板(2).png" alt="サイトを象徴する画像">
         </div>
 
         <!-- 新しい投稿ボタン -->

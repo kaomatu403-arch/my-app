@@ -16,6 +16,99 @@ body {
     /* 中央揃え */
 }
 
+/* ハンバーガーアイコン */
+.hamburger-icon {
+    width: 30px;
+    height: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1002;
+}
+
+.hamburger-icon span {
+    display: block;
+    width: 30px;
+    height: 4px;
+    background-color: #333;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+.hamburger-icon.active span:nth-child(1) {
+    transform: rotate(45deg) scaleX(1.2) translate(6.5px, 5px);
+}
+
+.hamburger-icon.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-icon.active span:nth-child(3) {
+    transform: rotate(-45deg) scaleX(1.2) translate(6.5px, -5px);
+}
+
+/* サイドメニュー */
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
+    transition: left 0.3s ease;
+    z-index: 1001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.side-menu.active {
+    left: 0;
+}
+
+/* メニューブロック */
+.menu-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* プロフィール画像 */
+.profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* 名前 */
+.profile-name {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* マイページリンク */
+.mypage-link {
+    text-decoration: none;
+    color: #4a90e2;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: 1px solid #4a90e2;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.mypage-link:hover {
+    background-color: #4a90e2;
+    color: #fff;
+}
+
 /* 象徴画像 */
 .hero-image img {
     width: 100%;
@@ -95,7 +188,8 @@ footer a:hover {
     text-decoration: underline;
 }
 
-/* レスポンシブ対応 */
+
+/* レスポンシブ */
 @media (max-width: 600px) {
     .hero-image img {
         max-height: 250px;
@@ -104,5 +198,9 @@ footer a:hover {
     .new-post-btn button {
         padding: 12px 20px;
         font-size: 15px;
+    }
+
+    .side-menu {
+        width: 240px;
     }
 }
