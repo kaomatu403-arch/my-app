@@ -1,6 +1,23 @@
+.m-plus-rounded-1c-regular {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+
+
+
+
+
 /* 全体設定 */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
     margin: 0;
     padding: 0;
     background-color: #f0f2f5;
@@ -170,6 +187,112 @@ body {
     line-height: 1.5;
     color: #333;
 }
+
+/* サインイン画面 */
+/* 外枠のブロック */
+.sign_in_form {
+    width: 100%;
+    max-width: 400px;
+    margin: 50px auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    text-align: center;
+    /* 基本的に中央揃え */
+}
+
+/* 切り替えタブの横並び */
+.tab_container {
+    display: flex;
+    background-color: #f0f2f5;
+}
+
+.tab {
+    flex: 1;
+    padding: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+    color: #666;
+}
+
+.tab.active {
+    background-color: #ffffff;
+    color: #4a90e2;
+    border-bottom: 3px solid #4a90e2;
+}
+
+/* 入力エリアの調整 */
+#auth_form {
+    padding: 30px;
+}
+
+.input_group {
+    margin-bottom: 20px;
+    text-align: left;
+    /* 説明文は左寄せ（指示通り） */
+}
+
+.message {
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 0.9em;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    /* 幅がはみ出さないように */
+}
+
+/* 入力欄とボタンを包むコンテナ */
+.password_wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* ボタンを右端に配置 */
+.toggle_btn {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    font-size: 0.8em;
+    color: #4a90e2;
+    /* アクセントカラー */
+    user-select: none;
+    /* テキスト選択を防ぐ */
+    font-weight: bold;
+}
+
+/* ボタンがある分、入力欄の右側に余白を作る */
+.password_wrapper input {
+    padding-right: 45px !important;
+}
+
+/* 送信ボタン */
+.submit_button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.submit_button:hover {
+    background-color: #357abd;
+}
+
+
 
 /* フッター */
 footer {

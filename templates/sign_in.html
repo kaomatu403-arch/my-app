@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ポケット掲示板</title>
+    <link rel="icon" href="../static/images/aiueo_hutoi.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="../static/css/style.css">
+    <script src="../static/js/main.js" defer></script>
+</head>
+
+<body>
+
+    <!-- ハンバーガーメニュー -->
+    <div class="hamburger-menu">
+        <div class="hamburger-icon" id="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <div class="side-menu" id="side-menu">
+        <div class="menu-block">
+            <img src="profile.jpg" alt="プロフィール画像" class="profile-img">
+            <p class="profile-name">Akira Ishikawa</p>
+            <a href="#" class="mypage-link">マイページ</a>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="sign_in_form">
+            <div class="tab_container">
+                <div id="tab_signin" class="tab active" onclick="switchForm('signin')">サインイン</div>
+                <div id="tab_signup" class="tab" onclick="switchForm('signup')">アカウント作成</div>
+            </div>
+
+            <form id="auth_form" action="/auth" method="POST">
+                <input type="hidden" id="form_mode" name="mode" value="signin">
+
+                <div class="input_group">
+                    <p class="message">アカウント名</p>
+                    <input type="text" name="username" required placeholder="アカウント名を入力">
+                </div>
+
+                <div class="input_group">
+                    <p class="message">パスワード</p>
+                    <div class="password_wrapper">
+                        <input type="password" id="password" name="password" required placeholder="パスワードを入力">
+                        <span id="toggle_password" class="toggle_btn" onclick="togglePassword('password')">表示</span>
+                    </div>
+                </div>
+
+                <div id="confirm_group" class="input_group" style="display: none;">
+                    <p class="message">パスワード（確認）</p>
+                    <div class="password_wrapper">
+                        <input type="password" id="password_confirm" placeholder="もう一度入力">
+                        <span id="toggle_password_confirm" class="toggle_btn"
+                            onclick="togglePassword('password_confirm')">表示</span>
+                    </div>
+                    <p id="pw_check_msg" class="message" style="font-size: 0.8em; margin-top: 5px;"></p>
+                </div>
+
+                <button type="submit" id="submit_btn" class="submit_button">送信</button>
+
+                <p id="error_message" class="message"
+                    style="color: red; font-size: 0.8em; margin-top: 10px; text-align: center; min-height: 1.2em;"></p>
+            </form>
+        </div>
+
+        <!-- フッター -->
+        <footer>
+            <p>製作者: Akira Ishikawa</p>
+            <p>SNS: <a href="#">Twitter</a> | <a href="#">Instagram</a></p>
+        </footer>
+
+    </div>
+
+</body>
+
+</html>
