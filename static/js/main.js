@@ -9,10 +9,10 @@ menuToggle.addEventListener('click', () => {
 
 
 //------------------------------------------------------------
-
-
-
 // 2. パスワード一致チェック機能
+
+
+
 const pwInput = document.getElementById('password');
 const pwConfirmInput = document.getElementById('password_confirm');
 const msgDisplay = document.getElementById('pw_check_msg');
@@ -39,10 +39,10 @@ pwConfirmInput.addEventListener('input', checkPassword);
 
 
 //------------------------------------------------------------
-
-
-
 // パスワードの表示非表示機能
+
+
+
 function togglePassword(targetId) {
     const passwordInput = document.getElementById(targetId);
     // ボタンの文字も変えるために取得
@@ -64,10 +64,10 @@ function togglePassword(targetId) {
 
 
 //------------------------------------------------------------
+//入れてはいけない文字確認機能
 
 
 
-// 入れてはいけない文字確認機能
 // 要素の取得
 const usernameInput = document.getElementsByName('username')[0];
 const passwordInput = document.getElementById('password');
@@ -156,3 +156,5 @@ function switchForm(mode) {
     // ...
     validateForm(); // 切り替え時にリセット・再チェック
 }
+
+//------------------------------------------------------------
