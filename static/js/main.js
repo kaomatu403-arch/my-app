@@ -102,6 +102,9 @@ function validateForm() {
     } else if (!alphanumericRegex.test(password)) {
         errorMessage = "※パスワードは英語または数字のみ使用可能です。";
         isPasswordValid = false;
+    } else if (password.length < 10) {
+        errorMessage = "※パスワードは10文字以上で入力してください。";
+        isPasswordValid = false;
     }
 
     // 3. アカウント作成時のみ：パスワード一致チェック

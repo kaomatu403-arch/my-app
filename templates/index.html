@@ -28,8 +28,17 @@
 
     <div class="side-menu" id="side-menu">
         <div class="menu-block">
-            <img src="profile.jpg" alt="プロフィール画像" class="profile-img">
-            <p class="profile-name">Akira Ishikawa</p>
+            <div class="user_status_block" style="text-align: right; padding: 10px; background-color: #f0f2f5;">
+                {% if session.get('user_name') %}
+                <p class="message">
+                    こんにちは、<strong>{{ session['user_name'] }}</strong> さん
+                </p>
+                <a href="/logout" style="color: #4a90e2; text-decoration: none; font-weight: bold;">ログアウト</a>
+                {% else %}
+                <p class="message">ゲストさん</p>
+                <a href="/show_signin" style="color: #4a90e2; text-decoration: none; font-weight: bold;">サインインはこちら</a>
+                {% endif %}
+            </div>
             <a href="#" class="mypage-link">マイページ</a>
         </div>
     </div>
