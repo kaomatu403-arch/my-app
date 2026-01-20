@@ -45,7 +45,18 @@
 
     <div class="container">
 
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" style="color: {% if category == 'error' %}red{% else %}green{% endif %}; margin-bottom: 10px;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
         <div class="sign_in_form">
+
             <div class="tab_container">
                 <div id="tab_signin" class="tab active" onclick="switchForm('signin')">サインイン</div>
                 <div id="tab_signup" class="tab" onclick="switchForm('signup')">アカウント作成</div>

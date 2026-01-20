@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for  # request を追加
+from flask import Flask, render_template, request, session, redirect, url_for, flash  # request を追加
 from supabase import create_client, Client # 新しく追加
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -33,7 +33,13 @@ def auth():
 
     # 3. 判定ロジックの「土台」を作る
     if mode == 'signup':
-        # --- Supabaseにデータを挿入 (Insert) ---
+
+        existing_user = supabase.table("User_Information").select("*").eq("username", username).execute()
+        
+        if len(existing_user.data) > 0:
+            # flashでメッセージを登録し、サインイン画面に戻す
+            flash("そのユーザーネームは既に使われています。", "error")
+            return redirect(url_for('show_signin'))
 
         # 生のパスワードをハッシュ化する
         hashed_password = generate_password_hash(password)
@@ -44,8 +50,6 @@ def auth():
         }
         # usersテーブルにデータを保存してね、という命令
         response = supabase.table("User_Information").insert(data).execute()
-        
-        return f"【データベースに保存完了】 ようこそ、{username}さん！"
     
     else:
         # --- サインイン処理 ---
