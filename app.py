@@ -50,6 +50,8 @@ def auth():
         }
         # usersテーブルにデータを保存してね、という命令
         response = supabase.table("User_Information").insert(data).execute()
+
+        return redirect(url_for('index'))
     
     else:
         # --- サインイン処理 ---
