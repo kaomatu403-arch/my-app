@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ポケット掲示板</title>
+    <title>ぽけっと掲示板</title>
     <link rel="icon" href="../static/images/aiueo_hutoi.png" type="image/x-icon">
 
     <link rel="stylesheet" href="../static/css/style.css">
@@ -46,13 +46,14 @@
     <div class="container">
 
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}" style="color: {% if category == 'error' %}red{% else %}green{% endif %}; margin-bottom: 10px;">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}"
+            style="color: {% if category == 'error' %}red{% else %}green{% endif %}; margin-bottom: 10px;">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
         {% endwith %}
 
         <div class="sign_in_form">
