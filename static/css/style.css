@@ -175,6 +175,8 @@ body {
     padding: 15px 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+
+    transition: 0.3s;
 }
 
 .post .author {
@@ -187,6 +189,22 @@ body {
     font-size: 15px;
     line-height: 1.5;
     color: #333;
+}
+
+.thread-link {
+    text-decoration: none;
+    /* 下線を消す */
+    color: inherit;
+    /* 文字色を親要素から引き継ぐ */
+    display: block;
+    /* ブロック全体をクリック可能にする */
+}
+
+.post:hover {
+    /* ここに枠線やホバー時のエフェクトを書くと、
+       ブロック全体がボタンのように反応します */
+    background: #cdd0d3;
+
 }
 
 /* サインイン画面 */

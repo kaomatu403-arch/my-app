@@ -17,7 +17,17 @@ def show_signin():
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    # Supabaseからスレッド一覧を取得
+    response = supabase.table("threads").select("*").order("created_at", desc=True).execute()
+
+    print("取得したデータ:", response.data)
+    
+    # HTMLを表示。threadsという変数名でリストを渡す
+    return render_template('index.html', threads=response.data)
+
+@app.route('/thread/<int:thread_id>')
+def show_thread(thread_id):
+    return render_template('thread.html', thread_id=thread_id)
 
 @app.route('/auth', methods=['POST'])
 def auth():

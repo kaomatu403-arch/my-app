@@ -46,52 +46,6 @@
     <!-- メインコンテナ -->
     <div class="container">
 
-        <!-- 象徴画像 -->
-        <div class="hero-image">
-            <img src="../static/images/ぽけっと 掲示板(2).png" alt="サイトを象徴する画像">
-        </div>
-
-        <!-- 新しい投稿ボタン -->
-        <div class="new-post-btn">
-            <button type="button">新しい投稿を作成する</button>
-        </div>
-
-        <!-- 掲示板一覧 -->
-        <div class="board">
-            <ul class="posts">
-                <li class="post">
-                    <div class="author">管理者</div>
-                    <div class="message">ようこそ掲示板へ！</div>
-                </li>
-                <li class="post">
-                    <div class="author">ユーザーA</div>
-                    <div class="message">デザインがとても良いです。</div>
-                </li>
-
-                {% for thread in threads %}
-                <li class="post">
-                    <a href="{{ url_for('show_thread', thread_id=thread.id) }}" class="thread-link">
-                        <div class="thread-content">
-                            <div class="author">{{ thread.created_by }}</div>
-                            <div class="message">{{ thread.title }}</div>
-                        </div>
-                    </a>
-                </li>
-                {% endfor %}
-
-                {% if not threads %}
-                <li class="no-posts">まだスレッドがありません。</li>
-                {% endif %}
-            </ul>
-        </div>
-
-        <!-- デバッグ用 -->
-        <div style="margin: 20px; text-align: center;">
-            <p>動作確認用メニュー</p>
-            <a href="/show_signin">
-                <button type="button">サインイン画面を確認する</button>
-            </a>
-        </div>
 
         <!-- フッター -->
         <footer>
