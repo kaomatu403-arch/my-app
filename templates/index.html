@@ -17,14 +17,32 @@
 
 <body>
 
-    <!-- ハンバーガーメニュー -->
-    <div class="hamburger-menu">
-        <div class="hamburger-icon" id="menu-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
+    <header>
+        <!-- ハンバーガーメニュー -->
+        <div class="hamburger-menu">
+            <div class="hamburger-icon" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
-    </div>
+
+        <div class="user_information_box">
+            {% if session.get('user_name') %}
+            <div class="user_icon_container">
+                <img src="https://wmcptefbfggervdkmlwl.supabase.co/storage/v1/object/public/Images/unknown_icon.jpg"
+                    alt="user icon" class="user_icon">
+            </div>
+            <div class="user_name_display">
+                {{ session['user_name'] }}
+            </div>
+            {% else %}
+            <a href="{{ url_for('show_signin') }}" class="signin_link">
+                サインイン
+            </a>
+            {% endif %}
+        </div>
+    </header>
 
     <div class="side-menu" id="side-menu">
         <div class="menu-block">

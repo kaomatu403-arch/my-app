@@ -21,16 +21,35 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f0f2f5;
-    display: flex;
-    justify-content: center;
 }
 
 .container {
-    width: 100%;
     max-width: 800px;
     padding: 20px;
+    margin: 0 auto;
+
     text-align: center;
+
+    /* text-alignだけでは不十分な場合、これで中央寄せを確実にします */
     /* 中央揃え */
+}
+
+/* ヘッダーの設定 */
+header {
+    display: block;
+    /* 横並びにする */
+    align-items: center;
+    /* 上下の中央を揃える */
+    padding: 10px 20px;
+    /* 周囲に少し余白を作る */
+    gap: 20px;
+    /* メニューとユーザーボックスの間隔 */
+    width: 100%;
+    height: 60px;
+
+    /* --- 追加 --- */
+    box-sizing: border-box;
+    /* パディングを含めて幅100%にする */
 }
 
 /* ハンバーガーアイコン */
@@ -126,6 +145,55 @@ body {
     color: #fff;
 }
 
+
+/* User_information_box */
+.user_information_box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 15px;
+    border: 2px solid #4a90e2;
+    /* 指定の色 */
+    border-radius: 25px;
+    /* サイドを丸くする */
+    width: fit-content;
+    /* 中身に合わせて幅を調整 */
+
+    margin-left: 40px;
+
+    position: fixed;
+}
+
+.user_icon_container {
+    /* アイコンを丸い枠に入れる設定 */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    /* 正方形を円にする */
+    overflow: hidden;
+    /* はみ出た部分を隠す */
+}
+
+.user_icon {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* 画像を枠に合わせてトリミング */
+}
+
+.user_name_display {
+    font-weight: bold;
+}
+
+.signin_link {
+    text-decoration: none;
+    color: #4a90e2;
+    font-weight: bold;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
 /* 象徴画像 */
 .hero-image img {
     width: 100%;
@@ -133,7 +201,6 @@ body {
     object-fit: cover;
     border-radius: 12px;
     margin-bottom: 30px;
-    margin-top: 30px;
 }
 
 /* 新しい投稿ボタン */
