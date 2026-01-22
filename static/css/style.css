@@ -154,6 +154,22 @@ body {
 }
 
 /* 掲示板一覧 */
+
+.message_f {
+    margin-top: 2px;
+    margin-left: 10px;
+    font-size: 15px;
+    text-align: left;
+}
+
+.message_f_borderline {
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color: #8d8d8d;
+    border-radius: 2px;
+}
+
 .board {
     background-color: #fff;
     border-radius: 12px;
@@ -171,24 +187,28 @@ body {
 }
 
 .post {
-    background: #f7f9fc;
+    background: #edeff1;
     padding: 15px 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 
     transition: 0.3s;
 }
 
-.post .author {
+.post .message {
     font-weight: bold;
-    color: #4a90e2;
+    color: #333;
     margin-bottom: 6px;
+
+    text-align: left;
 }
 
-.post .message {
+.post .author {
     font-size: 15px;
     line-height: 1.5;
-    color: #333;
+    color: #4a90e2;
+
+    text-align: right;
 }
 
 .thread-link {
@@ -344,5 +364,17 @@ footer a:hover {
 
     .side-menu {
         width: 240px;
+    }
+
+    .post {
+        padding: 7px 16px;
+    }
+
+    .post .author {
+        font-size: 13px;
+    }
+
+    .post .message {
+        font-size: 13px;
     }
 }

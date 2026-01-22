@@ -58,22 +58,17 @@
 
         <!-- 掲示板一覧 -->
         <div class="board">
-            <ul class="posts">
-                <li class="post">
-                    <div class="author">管理者</div>
-                    <div class="message">ようこそ掲示板へ！</div>
-                </li>
-                <li class="post">
-                    <div class="author">ユーザーA</div>
-                    <div class="message">デザインがとても良いです。</div>
-                </li>
 
+            <p class="message_f">↓新着順 ↓</p>
+            <span class="message_f_borderline"></span>
+
+            <ul class="posts">
                 {% for thread in threads %}
                 <li class="post">
                     <a href="{{ url_for('show_thread', thread_id=thread.id) }}" class="thread-link">
                         <div class="thread-content">
-                            <div class="author">{{ thread.created_by }}</div>
                             <div class="message">{{ thread.title }}</div>
+                            <div class="author">{{ thread.created_by }}</div>
                         </div>
                     </a>
                 </li>
