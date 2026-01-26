@@ -17,31 +17,34 @@
 
 <body>
 
-    <!-- ハンバーガーメニュー -->
-    <div class="hamburger-menu">
-        <div class="hamburger-icon" id="menu-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
-
-    <div class="side-menu" id="side-menu">
-        <div class="menu-block">
-            <div class="user_status_block" style="text-align: right; padding: 10px; background-color: #f0f2f5;">
-                {% if session.get('user_name') %}
-                <p class="message">
-                    こんにちは、<strong>{{ session['user_name'] }}</strong> さん
-                </p>
-                <a href="/logout" style="color: #4a90e2; text-decoration: none; font-weight: bold;">ログアウト</a>
-                {% else %}
-                <p class="message">ゲストさん</p>
-                <a href="/show_signin" style="color: #4a90e2; text-decoration: none; font-weight: bold;">サインインはこちら</a>
-                {% endif %}
+    <header>
+        <!-- ハンバーガーメニュー -->
+        <div class="hamburger-menu">
+            <div class="hamburger-icon" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-            <a href="#" class="mypage-link">マイページ</a>
         </div>
-    </div>
+
+        <div class="side-menu" id="side-menu">
+            <div class="menu-block">
+                <div class="user_status_block" style="text-align: right; padding: 10px; background-color: #f0f2f5;">
+                    {% if session.get('user_name') %}
+                    <p class="message">
+                        こんにちは、<strong>{{ session['user_name'] }}</strong> さん
+                    </p>
+                    <a href="/logout" style="color: #4a90e2; text-decoration: none; font-weight: bold;">ログアウト</a>
+                    {% else %}
+                    <p class="message">ゲストさん</p>
+                    <a href="/show_signin"
+                        style="color: #4a90e2; text-decoration: none; font-weight: bold;">サインインはこちら</a>
+                    {% endif %}
+                </div>
+                <a href="#" class="mypage-link">マイページ</a>
+            </div>
+        </div>
+    </header>
 
     <div class="container">
 
@@ -94,7 +97,10 @@
                 <p id="error_message" class="message"
                     style="color: red; font-size: 0.8em; margin-top: 10px; text-align: center; min-height: 1.2em;"></p>
             </form>
+
         </div>
+
+        <a href="{{ url_for('index') }}" class="back-link">← 一覧に戻る</a>
 
         <!-- フッター -->
         <footer>

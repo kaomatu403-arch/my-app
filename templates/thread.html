@@ -17,34 +17,84 @@
 
 <body>
 
-    <!-- ハンバーガーメニュー -->
-    <div class="hamburger-menu">
-        <div class="hamburger-icon" id="menu-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
-
-    <div class="side-menu" id="side-menu">
-        <div class="menu-block">
-            <div class="user_status_block" style="text-align: right; padding: 10px; background-color: #f0f2f5;">
-                {% if session.get('user_name') %}
-                <p class="message">
-                    こんにちは、<strong>{{ session['user_name'] }}</strong> さん
-                </p>
-                <a href="/logout" style="color: #4a90e2; text-decoration: none; font-weight: bold;">ログアウト</a>
-                {% else %}
-                <p class="message">ゲストさん</p>
-                <a href="/show_signin" style="color: #4a90e2; text-decoration: none; font-weight: bold;">サインインはこちら</a>
-                {% endif %}
+    <header>
+        <!-- ハンバーガーメニュー -->
+        <div class="hamburger-menu">
+            <div class="hamburger-icon" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-            <a href="#" class="mypage-link">マイページ</a>
         </div>
-    </div>
+
+        <div class="user_information_box">
+            {% if session.get('user_name') %}
+            <div class="user_icon_container">
+                <img src="https://wmcptefbfggervdkmlwl.supabase.co/storage/v1/object/public/Images/unknown_icon.jpg"
+                    alt="user icon" class="user_icon">
+            </div>
+            <div class="user_name_display">
+                {{ session['user_name'] }}
+            </div>
+            {% else %}
+            <a href="{{ url_for('show_signin') }}" class="signin_link">
+                サインイン
+            </a>
+            {% endif %}
+        </div>
+
+        <div class="side-menu" id="side-menu">
+            <div class="menu-block">
+                <div class="user_status_block" style="text-align: right; padding: 10px; background-color: #f0f2f5;">
+                    {% if session.get('user_name') %}
+                    <p class="message">
+                        こんにちは、<strong>{{ session['user_name'] }}</strong> さん
+                    </p>
+                    <a href="/logout" style="color: #4a90e2; text-decoration: none; font-weight: bold;">ログアウト</a>
+                    {% else %}
+                    <p class="message">ゲストさん</p>
+                    <a href="/show_signin"
+                        style="color: #4a90e2; text-decoration: none; font-weight: bold;">サインインはこちら</a>
+                    {% endif %}
+                </div>
+                <a href="#" class="mypage-link">マイページ</a>
+            </div>
+        </div>
+    </header>
 
     <!-- メインコンテナ -->
     <div class="container">
+
+        <div class="thread-header">
+            <h1>{{ thread.title }}</h1>
+            <p class="thread-meta">作成者: {{ thread.created_by }}</p>
+        </div>
+
+        <div class="message-board">
+            {% for post in posts %}
+            <div class="message-item">
+                <div class="message-info">
+                    <span class="message-author">{{ post.username }}</span>
+                    <span class="message-date">{{ post.created_at | datetimeformat }}</span>
+                </div>
+                <div class="message-text">
+                    {{ post.content }}
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if not posts %}
+            <p class="no-messages">まだメッセージはありません。</p>
+            {% endif %}
+        </div>
+
+        <div class="post-form-area">
+            <form action="{{ url_for('post_message', thread_id=thread.id) }}" method="POST">
+                <textarea name="content" placeholder="メッセージを入力してください" required></textarea>
+                <button type="submit" class="submit-btn">投稿する</button>
+            </form>
+            <a href="{{ url_for('index') }}" class="back-link">← 一覧に戻る</a>
+        </div>
 
 
         <!-- フッター -->

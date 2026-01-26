@@ -17,6 +17,32 @@
 
 <body>
 
+    <!-- ハンバーガーメニュー -->
+    <div class="hamburger-menu">
+        <div class="hamburger-icon" id="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <div class="side-menu" id="side-menu">
+        <div class="menu-block">
+            <div class="user_status_block" style="text-align: right; padding: 10px; background-color: #f0f2f5;">
+                {% if session.get('user_name') %}
+                <p class="message">
+                    こんにちは、<strong>{{ session['user_name'] }}</strong> さん
+                </p>
+                <a href="/logout" style="color: #4a90e2; text-decoration: none; font-weight: bold;">ログアウト</a>
+                {% else %}
+                <p class="message">ゲストさん</p>
+                <a href="/show_signin" style="color: #4a90e2; text-decoration: none; font-weight: bold;">サインインはこちら</a>
+                {% endif %}
+            </div>
+            <a href="#" class="mypage-link">マイページ</a>
+        </div>
+    </div>
+
     <header>
         <!-- ハンバーガーメニュー -->
         <div class="hamburger-menu">
@@ -65,40 +91,18 @@
     <!-- メインコンテナ -->
     <div class="container">
 
-        <!-- 象徴画像 -->
-        <div class="hero-image">
-            <img src="../static/images/ぽけっと 掲示板(2).png" alt="サイトを象徴する画像">
-        </div>
+        <div class="add-thread-container">
+            <h2>新しいスレッドを作成</h2>
 
-        <!-- 新しい投稿ボタン -->
-        <a href="/add_thread">
-            <div class="new-post-btn">
-                <button type="button">新しい投稿を作成する</button>
-            </div>
-        </a>
+            <form action="{{ url_for('create_thread') }}" method="POST">
+                <div class="input-group">
+                    <input type="text" name="title" placeholder="スレッドのタイトルを入力してください" required autocomplete="off">
+                </div>
 
-        <!-- 掲示板一覧 -->
-        <div class="board">
+                <button type="submit" class="submit-btn">スレッドを作成して移動</button>
 
-            <p class="message_f">↓スレッド：新着順 ↓</p>
-            <span class="message_f_borderline"></span>
-
-            <ul class="posts">
-                {% for thread in threads %}
-                <li class="post">
-                    <a href="{{ url_for('show_thread', thread_id=thread.id) }}" class="thread-link">
-                        <div class="thread-content">
-                            <div class="message">{{ thread.title }}</div>
-                            <div class="author">{{ thread.created_by }}</div>
-                        </div>
-                    </a>
-                </li>
-                {% endfor %}
-
-                {% if not threads %}
-                <li class="no-posts">まだスレッドがありません。</li>
-                {% endif %}
-            </ul>
+                <a href="{{ url_for('index') }}" class="cancel-link">キャンセルして戻る</a>
+            </form>
         </div>
 
         <!-- フッター -->

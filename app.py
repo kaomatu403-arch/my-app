@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash  # request を追加
 from supabase import create_client, Client # 新しく追加
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
+import uuid
+
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
@@ -10,7 +13,7 @@ SUPABASE_URL = "https://wmcptefbfggervdkmlwl.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndtY3B0ZWZiZmdnZXJ2ZGttbHdsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg3MTYyNDAsImV4cCI6MjA4NDI5MjI0MH0.6NZG1THnqv3N3qub-1Eac2X8Rz_auyR0He8AVgEMXk4"
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-@app.route('/show_signin')
+@app.route('/signin_or_up')
 def show_signin():
     # templatesフォルダの中にある sign_in.html を表示する
     return render_template('sign_in.html')
@@ -25,9 +28,16 @@ def index():
     # HTMLを表示。threadsという変数名でリストを渡す
     return render_template('index.html', threads=response.data)
 
-@app.route('/thread/<int:thread_id>')
+@app.route('/thread/<thread_id>')
 def show_thread(thread_id):
-    return render_template('thread.html', thread_id=thread_id)
+
+    # スレッド取得
+    thread_res = supabase.table("threads").select("*").eq("id", thread_id).single().execute()
+    
+    # メッセージ取得
+    posts_res = supabase.table("posts").select("*").eq("thread_id", thread_id).execute()
+    
+    return render_template('thread.html', thread=thread_res.data, posts=posts_res.data)
 
 @app.route('/auth', methods=['POST'])
 def auth():
@@ -87,11 +97,77 @@ def auth():
 
 @app.route('/logout')
 def logout():
-    # セッションからユーザー情報を消去
-    session.pop('user_name', None)
-    # ログアウトしたらトップページへ戻る
-    return redirect(url_for('index'))
+    session.clear() 
 
+    # 2. 「どこから来たか」のURLを取得する
+    # 直前のURLがない（ブックマーク等から直接来た）場合は index へ戻す
+    next_url = request.referrer or url_for('index')
+
+    # 3. 直前のページに戻る
+    return redirect(next_url)
+
+@app.route("/add_thread")
+def add_thread():
+    return render_template('add_thread.html')
+
+@app.route('/create_thread', methods=['POST'])
+def create_thread():
+    title = request.form.get('title')
+    user_name = session.get('user_name', '名無しさん')
+
+    # Supabaseにデータを挿入。作成した行のデータを返すように指定する
+    response = supabase.table("threads").insert({
+        "title": title,
+        "created_by": user_name
+    }).execute()
+
+    print(title)
+    print(user_name)
+
+    # 今作ったスレッドの情報を取得（リストの最初に入っています）
+    new_thread = response.data[0]
+    new_id = new_thread['id']
+
+    # indexではなく、作成したスレッドの「詳細ページ」へリダイレクト！
+    return redirect(url_for('show_thread', thread_id=new_id))
+
+@app.route('/thread/<thread_id>/post', methods=['POST'])
+def post_message(thread_id):
+
+    content = request.form.get('content')
+    user_name = session.get('user_name')
+
+    if not user_name:
+        # 2. まだ名前がない場合、セッションに一度だけIDを保存する
+        # すでにセッションにIDがあればそれを使い、なければ新しく作る
+        if 'temp_id' not in session:
+            session['temp_id'] = str(uuid.uuid4())[:8] # 8文字のランダム文字
+        
+        # 3. 表示用の名前を組み立てる
+        user_name = f"名無しさん (ID:{session['temp_id']})"
+
+    # postsテーブルにメッセージを挿入
+    supabase.table("posts").insert({
+        "thread_id": thread_id,
+        "content": content,
+        "username": user_name
+    }).execute()
+
+    # 投稿が終わったら、今見ていたスレッドのページを再表示
+    return redirect(url_for('show_thread', thread_id=thread_id))
+
+@app.template_filter('datetimeformat')
+def datetimeformat(value):
+    if not value:
+        return ""
+    # Supabaseの時刻文字列（ISO形式）を読み込む
+    # T や Z が含まれる形式に対応
+    try:
+        dt = datetime.fromisoformat(value.replace('Z', '+00:00'))
+        # 好きな形式に変換（例: 2026/01/26 10:15）
+        return dt.strftime('%Y/%m/%d %H:%M')
+    except ValueError:
+        return value # 変換できない場合はそのまま返す
 
 if __name__ == "__main__":
     app.run(debug=True)
