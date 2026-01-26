@@ -134,8 +134,31 @@ def add_thread():
 
 @app.route('/create_thread', methods=['POST'])
 def create_thread():
-    title = request.form.get('title')
-    user_name = session.get('user_name', '名無しさん')
+
+    title = request.form.get('title', '').strip()
+
+    # 1. 未入力チェック
+    if not title:
+        return "タイトルが必要です", 400
+
+    # 2. 文字数チェック（50文字以内）
+    if len(title) > 50:
+        return "タイトルは50文字以内で入力してください", 400
+
+    # 3. 改行チェック（Pythonの文字列内に改行が含まれていないか）
+    if "\n" in title or "\r" in title:
+        return "タイトルに改行を含めることはできません", 400
+
+    user_name = session.get('user_name')
+
+    if not user_name:
+        # 2. まだ名前がない場合、セッションに一度だけIDを保存する
+        # すでにセッションにIDがあればそれを使い、なければ新しく作る
+        if 'temp_id' not in session:
+            session['temp_id'] = str(uuid.uuid4())[:8] # 8文字のランダム文字
+        
+        # 3. 表示用の名前を組み立てる
+        user_name = f"名無しさん (ID:{session['temp_id']})"
 
     # Supabaseにデータを挿入。作成した行のデータを返すように指定する
     response = supabase.table("threads").insert({

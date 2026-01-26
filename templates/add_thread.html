@@ -8,7 +8,7 @@
     <link rel="icon" href="../static/images/aiueo_hutoi.png" type="image/x-icon">
 
     <link rel="stylesheet" href="../static/css/style.css">
-    <script src="../static/js/main.js" defer></script>
+    <script src="../static/js/create_thread.js" defer></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -96,10 +96,13 @@
 
             <form action="{{ url_for('create_thread') }}" method="POST">
                 <div class="input-group">
-                    <input type="text" name="title" placeholder="スレッドのタイトルを入力してください" required autocomplete="off">
+                    <input type="text" id="thread-title" name="title" placeholder="スレッドのタイトルを入力してください" required
+                        autocomplete="off">
                 </div>
 
-                <button type="submit" class="submit-btn">スレッドを作成して移動</button>
+                <div id="thread-error-msg" class="error-msg" style="display: none;"></div>
+
+                <button type="submit" id="thread-submit-btn" class="submit-btn">スレッドを作成して移動</button>
 
                 <a href="{{ url_for('index') }}" class="cancel-link">キャンセルして戻る</a>
             </form>
