@@ -451,6 +451,14 @@ input[type="password"] {
     border-color: #4a90e2;
 }
 
+/* 警告文のスタイル */
+.error-msg {
+    color: #ff4d4d;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
 /* ボタンの共通設定 */
 .submit-btn {
     width: 100%;
@@ -464,6 +472,13 @@ input[type="password"] {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+
+/* ボタンが無効な時の修飾 */
+.submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
 .submit-btn:hover {
@@ -527,6 +542,7 @@ input[type="password"] {
 .message-text {
     line-height: 1.6;
     color: #333;
+    white-space: pre-wrap;
 }
 
 /* 投稿フォーム */
@@ -628,5 +644,10 @@ footer a:hover {
     .user_information_box {
         height: 18px;
         font-size: 13px;
+    }
+
+    .user_icon_container {
+        height: 25px;
+        width: 25px;
     }
 }

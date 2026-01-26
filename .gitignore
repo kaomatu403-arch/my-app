@@ -1,0 +1,15 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+# 1. 秘密情報（最優先！）
+.env
+
+# 2. Pythonが自動生成する不要なファイル
+__pycache__/
+*.py[cod]
+
+# 3. 仮想環境のライブラリ（これを入れると重すぎてアップロードできません）
+venv/
+env/
+
+# 4. OSが勝手に作るゴミファイル
+.DS_Store
+Thumbs.db
