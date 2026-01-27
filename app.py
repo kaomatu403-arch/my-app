@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, session, redirect, url_for, flash  # request を追加
+from flask import Flask, render_template, request, session, redirect, url_for, flash, jsonify
 from supabase import create_client, Client # 新しく追加
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 import uuid
 import os  # 追加
 from dotenv import load_dotenv  # 追加
@@ -215,18 +215,39 @@ def post_message(thread_id):
     # 投稿が終わったら、今見ていたスレッドのページを再表示
     return redirect(url_for('show_thread', thread_id=thread_id) + '#latest')
 
+@app.route('/api/thread/<thread_id>/posts')
+def get_new_posts(thread_id):
+    # そのスレッドのメッセージをすべて取得（最新順など）
+    response = supabase.table("posts")\
+        .select("*")\
+        .eq("thread_id", thread_id)\
+        .order("created_at", desc=False)\
+        .execute()
+    
+    # データをJSON形式で返す
+    return jsonify(response.data)
+
 @app.template_filter('datetimeformat')
 def datetimeformat(value):
     if not value:
         return ""
-    # Supabaseの時刻文字列（ISO形式）を読み込む
-    # T や Z が含まれる形式に対応
     try:
-        dt = datetime.fromisoformat(value.replace('Z', '+00:00'))
-        # 好きな形式に変換（例: 2026/01/26 10:15）
-        return dt.strftime('%Y/%m/%d %H:%M')
-    except ValueError:
-        return value # 変換できない場合はそのまま返す
+        # 1. Supabaseから届く文字列(ISO形式)を日時のオブジェクトに変換
+        # 文字列内の 'Z' を '+00:00' に置換してUTCとして認識させる
+        dt_utc = datetime.fromisoformat(value.replace('Z', '+00:00'))
+        
+        # 2. 日本時間（JST）のタイムゾーンを作成 (+9時間)
+        jst = timezone(timedelta(hours=9))
+        
+        # 3. UTCから日本時間に変換
+        dt_jst = dt_utc.astimezone(jst)
+        
+        # 4. 読みやすい形式の「文字列」にして返す
+        return dt_jst.strftime('%Y/%m/%d %H:%M')
+    except Exception as e:
+        # 変換に失敗した場合は、デバッグ用にエラーを出力し、元の値をそのまま返す
+        print(f"Filter Error: {e}")
+        return value
 
 if __name__ == "__main__":
     app.run(debug=True)

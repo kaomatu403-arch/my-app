@@ -106,6 +106,49 @@
 
     </div>
 
+    <script>
+        const threadId = "{{ thread.id }}";
+        const messageBoard = document.querySelector('.message-board');
+
+        async function fetchPosts() {
+            try {
+                const response = await fetch(`/api/thread/${threadId}/posts`);
+                const posts = await response.json();
+
+                messageBoard.innerHTML = '';
+
+                posts.forEach(post => {
+                    // --- ここから追加・修正 ---
+                    // UTCの文字列をJavaScriptのDateオブジェクトに変換（自動でローカル時間に解釈されます）
+                    const date = new Date(post.created_at);
+                    const jstString = date.toLocaleString('ja-JP', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                    });
+                    // --- ここまで ---
+
+                    const messageHtml = `
+                    <div class="message-item">
+                        <div class="message-info">
+                            <span class="message-author">${post.username}</span>
+                            <span class="message-date">${jstString}</span> </div>
+                        <div class="message-text">${post.content}</div>
+                    </div>
+                `;
+                    messageBoard.insertAdjacentHTML('beforeend', messageHtml);
+                });
+            } catch (error) {
+                console.error("通信エラー:", error);
+            }
+        }
+
+        setInterval(fetchPosts, 5000);
+    </script>
+
+
 </body>
 
 </html>
