@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="../static/css/style.css">
     <script src="../static/js/thread.js" defer></script>
+    <script src="../static/js/thread_stop_continuous.js" defer></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,7 +88,7 @@
         </div>
 
         <div class="post-form-area">
-            <form action="{{ url_for('post_message', thread_id=thread.id) }}" method="POST">
+            <form id="post-form" action="{{ url_for('post_message', thread_id=thread.id) }}" method="POST">
                 <textarea id="content-area" name="content" placeholder="メッセージを入力してください" required></textarea>
 
                 <div id="error-message" class="error-msg" style="display: none;"></div>
