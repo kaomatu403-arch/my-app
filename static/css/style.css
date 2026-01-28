@@ -650,4 +650,12 @@ footer a:hover {
         height: 25px;
         width: 25px;
     }
+
+    .add-thread-container h2 {
+        font-size: 20px;
+    }
+
+    .input-group input {
+        font-size: 14px;
+    }
 }
